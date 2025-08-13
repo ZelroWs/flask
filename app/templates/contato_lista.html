@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+    <div class="container">
+        <div class="row mt-4">
+            <h3>Lista Contato</h3>
+
+            <form method="get" class="row">
+                <div class="col-9 ">
+                    <input type="text" name="pesquisa" class="form-control">
+                </div>
+                <div class="col-3">
+                    <button type="submit" class="btn btn-primary ">Pesquisar</button>
+                </div>
+            </form>
+
+            <div class="col-12 mt-4">
+                <table class="table " -moz-border-radius: 5px>
+                    <thead class="text-center ">
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Assunto</th>
+                            <th>Repondido</th>
+                            <th>Visualizar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for linha in context['dados'] %}
+                        <tr>
+                            <td class="text-start">{{linha.nome}}</td>
+                            <td>{{linha.email}}</td>
+                            <td>{{linha.assunto}}</td>
+                            <td>
+                                {% if linha.respondido == 0 %}
+                                    Não
+                                {% else %}
+                                    Sim
+                                {% endif %}
+                            </td>
+                            <td><a href="{{url_for('contatoDetail', id=linha.id)}}">
+                                <img src="{{url_for('static', filename='img/responder.png')}}" alt="responder" width="20px">
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+{% endblock %}
