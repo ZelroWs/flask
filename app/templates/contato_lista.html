@@ -15,37 +15,61 @@
             </form>
 
             <div class="col-12 mt-4">
+                {% for linha in context['dados'] %}
+                {% if linha.respondido == 0 %}
+                <h3>E-mails não respondidos</h3>
                 <table class="table " -moz-border-radius: 5px>
                     <thead class="text-center ">
                         <tr>
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th>Assunto</th>
-                            <th>Repondido</th>
                             <th>Visualizar</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
-                        {% for linha in context['dados'] %}
+                        
                         <tr>
                             <td class="text-start">{{linha.nome}}</td>
-                            <td>{{linha.email}}</td>
+                            <td>{{linha.email_usuario}}</td>
                             <td>{{linha.assunto}}</td>
-                            <td>
-                                {% if linha.respondido == 0 %}
-                                    Não
-                                {% else %}
-                                    Sim
-                                {% endif %}
-                            </td>
                             <td><a href="{{url_for('contatoDetail', id=linha.id)}}">
                                 <img src="{{url_for('static', filename='img/responder.png')}}" alt="responder" width="20px">
                                 </a>
                             </td>
                         </tr>
-                        {% endfor %}
+                        
                     </tbody>
+                    
                 </table>
+                {% else %}
+                <h3>E-mails respondidos</h3>
+                <table class="table " -moz-border-radius: 5px>
+                    <thead class="text-center ">
+                        <tr>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                            <th>Assunto</th>
+                            <th>Visualizar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        
+                        <tr>
+                            <td class="text-start">{{linha.nome}}</td>
+                            <td>{{linha.email_usuario}}</td>
+                            <td>{{linha.assunto}}</td>
+                            <td><a href="{{url_for('contatoDetail', id=linha.id)}}">
+                                <img src="{{url_for('static', filename='img/responder.png')}}" alt="responder" width="20px">
+                                </a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                    
+                </table>
+                {% endif %}
+            {% endfor %}
             </div>
         </div>
         

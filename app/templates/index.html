@@ -1,17 +1,57 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo Flask</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/Flask.png') }}">
+    
+</head>
+<body class="bg-body-secondary">
+        {% if current_user.is_authenticated %}
+        {% include 'nav.html' %}
+        {% endif %}
+    <section class="container-fluid " >
+    
 
-{% block content %} 
-    <div>
-        <h3>Estudo Flask</h3>
-        <h5>@flask</h5>
+    <div class="container mt-4">
+
+        <h3>Estudo de <img src="{{url_for('static', filename='img/Flask_txt.png')}}" alt="Flask" width="100"></h3>
+        
+
+
+        {% if current_user.is_authenticated %}
+        <p>Bem vindo {{current_user.nome}}</p>
+        <span class="btn btn-dark">{{current_user.nome}} {{current_user.sobrenome}}</span>
+        <a href="{{url_for('logout')}}" class="btn btn-danger">Sair</a>
+        {% else %}
+        <h3 class="col-12 text-center">Faça seu login</h3>
+        <form action="" method="post" class="row mt-4 p-4 rounded border shadow">
+            {{form.csrf_token}}
+
+            {{form.email.label()}}
+            {{form.email(class="form-control")}}
+
+            {{form.senha.label()}}
+            {{form.senha(class="form-control")}}
+
+
+            {{form.btnSubmit(class="btn btn-dark mt-4 col-12")}}
+        </form>
+
+        <div class="row mt-4 p-4 rounded border shadow">
+            <h4 class="col-12 text-center">Não tem cadastro?</h4>
+            <a href="{{url_for('cadastro')}}" class="btn btn-dark mt-4 col-12">Faça seu cadastro</a>
+        </div>
+        {% endif %}
+
+
     </div>
+    </section>    
+        
 
-    <div>
-        <p>Bem vindo {{context.usuario}} a aula de flask</p>
-        <p><b>Idade:</b> {{context.idade}} </p>
-
-        <img src="{{url_for('static', filename='img/Flask_txt.png')}}" alt="Flask">
-
-    </div>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-{% endblock %}
+</body>
+</html>

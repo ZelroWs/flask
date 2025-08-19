@@ -1,9 +1,25 @@
 <div class="container-fluid bg-black shadow p-3 mb-5"> 
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid bg-secundary text-start">
-            <a href="/" class="btn btn-dark mt-2 mb-2 col-2">Home</a>
-            <a href="{{url_for('contato')}}"class="btn btn-primary mt-2 mb-2 col-2">Contato</a>
-            <a href="{{url_for('contatoLista')}}"class="btn btn-info mt-2 mb-2 col-2">Lista de contatos</a>
+            <div class="col-10">
+                <a href="/" class="btn btn-dark mt-2 mb-2 col-2">Home</a>
+                <a href="{{url_for('contato')}}"class="btn btn-primary mt-2 mb-2 col-2">Contato</a>
+                <a href="{{url_for('contatoLista')}}"class="btn btn-info mt-2 mb-2 col-2">Lista de contatos</a>
+                <a href="{{url_for('PostNovo')}}"class="btn btn-success mt-2 mb-2 col-2">Novo Post</a>
+                <a href="{{url_for('PostLista')}}"class="btn btn-success mt-2 mb-2 col-2">Lista de Posts</a>
+            </div>
+            <div class="col-2">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="text-end">
+                            <a href="{{url_for('DadosUsuario')}}" class="btn btn-dark">{{current_user.nome}} {{current_user.sobrenome}}</a>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <a href="{{url_for('logout')}}" class="btn btn-danger">Sair</a>
+                    </div>
+                </div>  
+            </div>
         </div>
     </nav>
 </div>

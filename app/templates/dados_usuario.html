@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+    <div class="container">
+            <div class="rol">
+                <h3>Seus dados</h3>
+            </div>
+            <div class="row mt-4 p-4 rounded border shadow">
+                <label for="">Nome</label>
+                <input class="form-control bg-white" id="nome" name="nome" required="" type="text" value="{{user.nome}}" disabled>
+                <label for="">Sobrenome</label>
+                <input class="form-control bg-white" id="nome" name="nome" required="" type="text" value="{{user.sobrenome}}" disabled>
+                <label for="">E-mail</label>
+                <input class="form-control bg-white" id="nome" name="nome" required="" type="text" value="{{user.email}}" disabled>
+                <a href="{{url_for('DadosUsuarioEdit')}}" class="btn btn-dark mt-4 col-12">Atualizar dados</a>
+                
+            </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+{% endblock %}
