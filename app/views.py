@@ -11,6 +11,10 @@ def homepage():
     form = LoginForm()
     if form.validate_on_submit():
         user = form.login()
+        if user == 'Senha incorreta':
+            return render_template('index.html', form=form, mensagem=user)
+        elif user == 'Usuário não encontrado':
+            return render_template('index.html', form=form, mensagem=user)
         login_user(user, remember=True)
 
     print(current_user.is_authenticated)

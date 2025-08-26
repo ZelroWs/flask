@@ -28,6 +28,10 @@
         <form action="" method="post" class="row mt-4 p-4 rounded border shadow">
             {{form.csrf_token}}
 
+            
+            {% if mensagem %}
+            <p class="text-danger">{{mensagem}}</p>
+            {% endif %}
             {{form.email.label()}}
             {{form.email(class="form-control")}}
 

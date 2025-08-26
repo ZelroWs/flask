@@ -25,9 +25,9 @@ class LoginForm(FlaskForm):
                 #login
                 return user
             else:
-                raise Exception('Senha incorreta')
+                return 'Senha incorreta'
         else:
-            raise Exception('Usuário não encontrado')
+            return 'Usuário não encontrado'
         
 #formulario padrao
 class UserForm(FlaskForm):
