@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, SelectField, FileField
+from wtforms import StringField, SubmitField, PasswordField, SelectField, FileField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 import os
@@ -99,7 +99,7 @@ class UserFormUpdate(FlaskForm):
 class ContatoForm(FlaskForm):
     email = SelectField('E-mail', validators=[DataRequired()], choices=[])
     assunto = StringField('Assunto', validators=[DataRequired()])
-    mensagem = StringField('Mensagem', validators=[DataRequired()])
+    mensagem = TextAreaField('Mensagem', validators=[DataRequired()])
     btnSubmit = SubmitField('Enviar')
 
     def __init__(self, *args, **kwargs):
@@ -116,13 +116,18 @@ class ContatoForm(FlaskForm):
             mensagem = self.mensagem.data
         )
 
+
         db.session.add(contato)
         db.session.commit()
 
+class RespostaForm(FlaskForm):
+    mensagem = TextAreaField('Resposta', validators=[DataRequired()])
+    btnSubmit = SubmitField('Enviar Resposta')
+    
 class PostForm(FlaskForm):
     mensagem = StringField('Mensagem', validators=[DataRequired()])
     btnSubmit = SubmitField('Enviar')
-    imagem = FileField('Imagem', validators=[DataRequired()])
+    imagem = FileField('Imagem')
 
     def save(self, user_id):
         imagem = self.imagem.data
@@ -142,8 +147,8 @@ class PostForm(FlaskForm):
             'post',
             nome_seguro
         )
-
-        imagem.save(caminho)
+        if imagem:
+            imagem.save(caminho)
 
         db.session.add(post)
         db.session.commit()

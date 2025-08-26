@@ -3,7 +3,7 @@ from flask import render_template, url_for, request, redirect
 from flask_login import login_user, logout_user, current_user, login_required
 import datetime
 from app.models import Contato, Post, User
-from app.forms import ContatoForm, UserForm, LoginForm, PostForm, PostComentarioForm, UserFormUpdate
+from app.forms import ContatoForm, UserForm, LoginForm, PostForm, PostComentarioForm, UserFormUpdate, RespostaForm
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -69,11 +69,14 @@ def contatoLista():
     if request.method == 'GET':
         pesquisa = request.args.get('pesquisa', '')
 
-    dados = Contato.query.filter_by(email_destino=current_user.email)
+    #dados = Contato.query.filter_by(email_destino=current_user.email)
+    dados = db.paginate(db.select(Contato).filter_by(email_destino=current_user.email).order_by(Contato.data_envio), max_per_page=3)
+    
     if pesquisa != '':
         dados = dados.filter_by(nome=pesquisa)
+        dados.order_by()
         
-    context = {'dados': dados.all()}
+    context = {'dados': dados}
 
     return render_template('contato_lista.html', context=context)
 
@@ -100,11 +103,27 @@ def DadosUsuarioEdit():
     return render_template('dados_usuario_edit.html', user=current_user, form=form)
 
 
-@app.route('/contato/<int:id>/')
+@app.route('/contato/<int:id>/', methods=['GET', 'POST'])
 @login_required
 def contatoDetail(id):
-    obj = Contato.query.get(id)
-    return render_template('contato_detail.html', obj=obj)
+    obj = Contato.query.get_or_404(id)
+    form = RespostaForm()
+    
+    if form.validate_on_submit():
+        # Cria a resposta
+        resposta = Contato(
+            nome=current_user.nome,
+            email_destino=obj.email_usuario,
+            email_usuario=current_user.email,
+            assunto=obj.assunto,
+            mensagem=form.mensagem.data
+        )
+        db.session.add(resposta)
+        obj.respondido = 1
+        db.session.commit()
+        return redirect(url_for('contatoLista'))
+    
+    return render_template('contato_detail.html', obj=obj, form=form)
 
 
 
@@ -114,10 +133,7 @@ def contato():
     form = ContatoForm()
     contatos = User.query.all()
     context = {}
-    print(form)
-    print(form.email)
     if form.validate_on_submit():
-        print(form.email)
         form.save(current_user.email, current_user.nome)
         return redirect(url_for('homepage'))
     return render_template('contato.html', context=context, form=form, contatos=contatos)

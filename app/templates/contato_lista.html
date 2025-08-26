@@ -4,7 +4,9 @@
     <div class="container">
         <div class="row mt-4">
             <h3>Lista Contato</h3>
-
+            <p>Aqui estão os contatos que foram enviados para você.</p>
+            <hr>
+            <table>Filtre os contatos rebidos por nome</table>
             <form method="get" class="row">
                 <div class="col-9 ">
                     <input type="text" name="pesquisa" class="form-control">
@@ -14,65 +16,54 @@
                 </div>
             </form>
 
-            <div class="col-12 mt-4">
+            <div class="col-12 mt-4" >
+                <h3>E-mails não respondidos</h3>
                 {% for linha in context['dados'] %}
                 {% if linha.respondido == 0 %}
-                <h3>E-mails não respondidos</h3>
-                <table class="table " -moz-border-radius: 5px>
-                    <thead class="text-center ">
-                        <tr>
-                            <th>Nome</th>
-                            <th>E-mail</th>
-                            <th>Assunto</th>
-                            <th>Visualizar</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        
-                        <tr>
-                            <td class="text-start">{{linha.nome}}</td>
-                            <td>{{linha.email_usuario}}</td>
-                            <td>{{linha.assunto}}</td>
-                            <td><a href="{{url_for('contatoDetail', id=linha.id)}}">
-                                <img src="{{url_for('static', filename='img/responder.png')}}" alt="responder" width="20px">
-                                </a>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                    
-                </table>
-                {% else %}
-                <h3>E-mails respondidos</h3>
-                <table class="table " -moz-border-radius: 5px>
-                    <thead class="text-center ">
-                        <tr>
-                            <th>Nome</th>
-                            <th>E-mail</th>
-                            <th>Assunto</th>
-                            <th>Visualizar</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        
-                        <tr>
-                            <td class="text-start">{{linha.nome}}</td>
-                            <td>{{linha.email_usuario}}</td>
-                            <td>{{linha.assunto}}</td>
-                            <td><a href="{{url_for('contatoDetail', id=linha.id)}}">
-                                <img src="{{url_for('static', filename='img/responder.png')}}" alt="responder" width="20px">
-                                </a>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                    
-                </table>
+                <div class="class row text-center bg-white mt-2">
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>Nome</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>E-mail</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>Assunto</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>Visualizar</b></div>
+                </div>
+                <div class="class row text-center bg-white">
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom"><b>{{linha.nome}}</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom"><b>{{linha.email_usuario}}</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom"><b>{{linha.contato_resumo()}}</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom">
+                        <a href="{{url_for('contatoDetail', id=linha.id)}}">
+                            <img src="{{url_for('static', filename='img/responder.png')}}" alt="responder" width="20px">
+                        </a>
+                    </div>
+                </div>
                 {% endif %}
-            {% endfor %}
+                {% endfor %}
+                <br>
+                <hr>
+                <br>
+                <h3>E-mails respondidos</h3>
+                {% for linha in context['dados'] %}
+                {% if linha.respondido == 1 %}
+                <div class="class row text-center bg-white mt-2">
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>Nome</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>E-mail</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>Assunto</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-top"><b>Visualizar</b></div>
+                </div>
+                <div class="class row text-center bg-white">
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom"><b>{{linha.nome}}</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom"><b>{{linha.email_usuario}}</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom"><b>{{linha.contato_resumo()}}</b></div>
+                    <div class="class col-3 border border-black border-opacity-25 rounded-bottom">
+                        <a href="{{url_for('contatoDetail', id=linha.id)}}">
+                            <img src="{{url_for('static', filename='img/responder.png')}}" alt="responder" width="20px">
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
             </div>
-        </div>
-        
+        </div>    
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 {% endblock %}

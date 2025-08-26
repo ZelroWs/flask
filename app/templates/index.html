@@ -22,9 +22,7 @@
 
 
         {% if current_user.is_authenticated %}
-        <p>Bem vindo {{current_user.nome}}</p>
-        <span class="btn btn-dark">{{current_user.nome}} {{current_user.sobrenome}}</span>
-        <a href="{{url_for('logout')}}" class="btn btn-danger">Sair</a>
+        <h3>Bem vindo {{current_user.nome}}</h3>
         {% else %}
         <h3 class="col-12 text-center">Faça seu login</h3>
         <form action="" method="post" class="row mt-4 p-4 rounded border shadow">
@@ -51,7 +49,6 @@
     </section>    
         
 
-    <script src="{{url_for('static', filename='js/script.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -25,6 +25,11 @@ class Contato(db.Model):
     assunto = db.Column(db.String, nullable = True)
     mensagem = db.Column(db.String, nullable = True)
     respondido = db.Column(db.Integer, default=0)
+    def contato_resumo(self):
+        if len(self.assunto) > 10:
+            return f"{self.assunto[:10]}..."
+        else:
+             return self.assunto[:10]
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)

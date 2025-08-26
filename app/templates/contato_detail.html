@@ -11,7 +11,7 @@
         </div>
         <div class="col-6">
             E-mail:
-            <input type="text" value="{{obj.email}}" class="form-control bg-secondary text-white" readonly>
+            <input type="text" value="{{obj.email_usuario}}" class="form-control bg-secondary text-white" readonly>
         </div>
         <div class="col-12">
             Assunto:
@@ -19,12 +19,18 @@
         </div>
         <div class="col-12">
             Mensagem:
-            <textarea type="text" rows="10" class="form-control bg-secondary text-white" readonly>{{obj.mensagem}}</textarea>
+            <textarea type="text" rows="10" class="form-control bg-white" readonly>{{obj.mensagem}}</textarea>
         </div>
-        
+        <div class="col-12 mt-4">
+            <form method="POST" action="">
+            {{form.csrf_token}}
+            {{form.mensagem(class="form-control", placeholder="Resposta...", rows=10)}}
+            <br>
+            {{form.btnSubmit(class="btn btn-dark mt-2 mb-4 col-12")}}
+            </form>
+        </div>
     </div>
 </div>
-
 
 
 
